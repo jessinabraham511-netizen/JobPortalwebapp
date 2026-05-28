@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Saved Jobs</title>
+
+<style>
+
+body{
+    font-family:Arial;
+    background:#f4f6f9;
+    margin:0;
+    padding:30px;
+}
+
+.heading{
+    text-align:center;
+    margin-bottom:30px;
+    color:#222;
+}
+
+.jobs-container{
+    display:flex;
+    flex-wrap:wrap;
+    gap:20px;
+    justify-content:center;
+}
+
+.job-card{
+    background:white;
+    width:320px;
+    padding:20px;
+    border-radius:14px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+    transition:0.3s;
+}
+
+.job-card:hover{
+    transform:translateY(-5px);
+}
+
+.job-title{
+    font-size:22px;
+    font-weight:bold;
+    color:#111827;
+}
+
+.company{
+    margin-top:8px;
+    color:#4b5563;
+    font-size:18px;
+}
+
+.location{
+    margin-top:8px;
+    color:#6b7280;
+}
+
+.actions{
+    margin-top:20px;
+    display:flex;
+    gap:10px;
+}
+
+.apply-btn{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:10px 16px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.apply-btn:hover{
+    background:#1d4ed8;
+}
+
+.remove-btn{
+    background:#dc2626;
+    color:white;
+    border:none;
+    padding:10px 16px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.remove-btn:hover{
+    background:#b91c1c;
+}
+
+.back-btn{
+    display:inline-block;
+    margin-bottom:25px;
+    text-decoration:none;
+    background:#111827;
+    color:white;
+    padding:10px 16px;
+    border-radius:8px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<a href="/home" class="back-btn">
+    Back To Home
+</a>
+
+<h1 class="heading">Saved Jobs</h1>
+
+<div class="jobs-container">
+
+<div class="job-card"
+th:each="job : ${jobs}">
+
+    <div class="job-title"
+    th:text="${job.jobTitle}">
+    </div>
+
+    <div class="company"
+    th:text="${job.company}">
+    </div>
+
+    <div class="location"
+    th:text="${job.location}">
+    </div>
+
+    <div class="actions">
+
+        <a th:href="@{/apply(id=${job.id})}">
+            <button class="apply-btn">
+                Apply
+            </button>
+        </a>
+
+        <a th:href="@{/deleteSavedJob(id=${job.id})}">
+            <button class="remove-btn">
+                Remove
+            </button>
+        </a>
+
+    </div>
+
+</div>
+
+</div>
+
+</body>
+</html>

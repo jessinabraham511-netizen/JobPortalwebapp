@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My Profile</title>
+
+    <style>
+
+        body{
+            margin:0;
+            padding:0;
+            font-family:Arial, sans-serif;
+            background:#f4f7fb;
+        }
+
+        .container{
+            width:80%;
+            max-width:900px;
+            margin:40px auto;
+        }
+
+        /* FORM SECTION */
+
+        .profile-form{
+            background:white;
+            padding:30px;
+            border-radius:15px;
+            box-shadow:0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .profile-form h2{
+            text-align:center;
+            margin-bottom:25px;
+            color:#333;
+        }
+
+        .profile-form input,
+        .profile-form textarea{
+            width:100%;
+            padding:12px;
+            margin-top:8px;
+            margin-bottom:20px;
+            border:1px solid #ccc;
+            border-radius:8px;
+            font-size:15px;
+        }
+
+        .profile-form button{
+            width:100%;
+            padding:12px;
+            background:#2563eb;
+            color:white;
+            border:none;
+            border-radius:8px;
+            font-size:16px;
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        .profile-form button:hover{
+            background:#1d4ed8;
+        }
+
+        /* PROFILE CARD */
+
+        .profile-card{
+            background:white;
+            padding:30px;
+            border-radius:15px;
+            box-shadow:0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .profile-top{
+            text-align:center;
+            margin-bottom:25px;
+        }
+
+        .profile-top img{
+            width:150px;
+            height:150px;
+            border-radius:50%;
+            object-fit:cover;
+            border:4px solid #2563eb;
+        }
+
+        .profile-top h2{
+            margin-top:15px;
+            color:#222;
+        }
+
+        .profile-info{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:20px;
+        }
+
+        .info-box{
+            background:#f8fafc;
+            padding:15px;
+            border-radius:10px;
+        }
+
+        .info-box h4{
+            margin:0 0 8px;
+            color:#2563eb;
+        }
+
+        .info-box p{
+            margin:0;
+            color:#444;
+        }
+
+        .edit-btn{
+            display:inline-block;
+            margin-top:25px;
+            padding:12px 20px;
+            background:#2563eb;
+            color:white;
+            text-decoration:none;
+            border-radius:8px;
+            transition:0.3s;
+        }
+
+        .edit-btn:hover{
+            background:#1d4ed8;
+        }
+
+        @media(max-width:768px){
+
+            .profile-info{
+                grid-template-columns:1fr;
+            }
+
+            .container{
+                width:95%;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- PROFILE FORM -->
+
+    <div class="profile-form"
+         th:if="${!user.profileCompleted}">
+
+        <h2>Complete Your Profile</h2>
+
+        <form th:action="@{/updateProfile}"
+              th:object="${user}"
+              method="post">
+
+            <input type="text"
+                   th:field="*{bio}"
+                   placeholder="Bio">
+
+            <input type="text"
+                   th:field="*{skills}"
+                   placeholder="Skills">
+
+            <input type="text"
+                   th:field="*{college}"
+                   placeholder="College">
+
+            <input type="text"
+                   th:field="*{degree}"
+                   placeholder="Degree">
+
+            <input type="text"
+                   th:field="*{experience}"
+                   placeholder="Experience">
+
+            <input type="text"
+                   th:field="*{linkedin}"
+                   placeholder="LinkedIn URL">
+
+            <input type="text"
+                   th:field="*{github}"
+                   placeholder="Github URL">
+
+            <input type="text"
+                   th:field="*{phone}"
+                   placeholder="Phone Number">
+
+            <input type="text"
+                   th:field="*{profilePhoto}"
+                   placeholder="Profile Photo URL">
+
+            <button type="submit">
+                Update Profile
+            </button>
+
+        </form>
+
+    </div>
+
+    <!-- PROFILE DETAILS -->
+
+    <div class="profile-card"
+         th:if="${user.profileCompleted}">
+
+        <div class="profile-top">
+
+            <img th:src="${user.profilePhoto}">
+
+            <h2 th:text="${user.name}">
+                User Name
+            </h2>
+
+            <p th:text="${user.email}">
+                user@gmail.com
+            </p>
+
+        </div>
+
+        <div class="profile-info">
+
+            <div class="info-box">
+                <h4>Bio</h4>
+                <p th:text="${user.bio}"></p>
+            </div>
+
+            <div class="info-box">
+                <h4>Skills</h4>
+                <p th:text="${user.skills}"></p>
+            </div>
+
+            <div class="info-box">
+                <h4>College</h4>
+                <p th:text="${user.college}"></p>
+            </div>
+
+            <div class="info-box">
+                <h4>Degree</h4>
+                <p th:text="${user.degree}"></p>
+            </div>
+
+            <div class="info-box">
+                <h4>Experience</h4>
+                <p th:text="${user.experience}"></p>
+            </div>
+
+            <div class="info-box">
+                <h4>Phone</h4>
+                <p th:text="${user.phone}"></p>
+            </div>
+
+        </div>
+
+        <a href="/editProfile"
+           class="edit-btn">
+            Edit Profile
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>
